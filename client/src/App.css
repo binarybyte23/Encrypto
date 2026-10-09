@@ -13,8 +13,8 @@ body,
   margin: 0;
   width: 100%;
   min-height: 100%;
-  background: #05070b;
-  color: #e8edf5;
+  background: #eef2f5;
+  color: #152630;
   font-family:
     Inter,
     ui-sans-serif,
@@ -62,7 +62,7 @@ button:disabled {
       rgba(96, 70, 180, 0.08),
       transparent 32%
     ),
-    #05070b;
+    #eef2f5;
 }
 
 /* =========================================================
@@ -91,7 +91,7 @@ button:disabled {
       rgba(100, 70, 180, 0.08),
       transparent 35%
     ),
-    #05070b;
+    #eef2f5;
 }
 
 .landing-grid {
@@ -102,12 +102,12 @@ button:disabled {
 
   background-image:
     linear-gradient(
-      rgba(255, 255, 255, 0.025) 1px,
+      rgba(25, 60, 85, 0.07) 1px,
       transparent 1px
     ),
     linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0.025) 1px,
+      rgba(25, 60, 85, 0.07) 1px,
       transparent 1px
     );
 
@@ -154,12 +154,12 @@ button:disabled {
   background:
     linear-gradient(
       145deg,
-      rgba(15, 25, 35, 0.94),
-      rgba(6, 11, 17, 0.96)
+      rgba(255, 255, 255, 0.94),
+      rgba(236, 241, 245, 0.96)
     );
 
   box-shadow:
-    0 30px 90px rgba(0, 0, 0, 0.55),
+    0 30px 90px rgba(25, 55, 80, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.035);
 
   backdrop-filter: blur(18px);
@@ -185,8 +185,8 @@ button:disabled {
   background:
     linear-gradient(
       145deg,
-      #17232e,
-      #080d13
+      #d7e1e8,
+      #ffffff
     );
 
   box-shadow:
@@ -195,7 +195,7 @@ button:disabled {
 }
 
 .logo-core {
-  color: #d9edf7;
+  color: #152630;
 
   font-size: 27px;
   font-weight: 800;
@@ -207,7 +207,7 @@ button:disabled {
 .landing-eyebrow {
   text-align: center;
 
-  color: #6fa4b8;
+  color: #23748f;
 
   font-size: 10px;
   font-weight: 700;
@@ -220,7 +220,7 @@ button:disabled {
 
   text-align: center;
 
-  color: #f3f6fa;
+  color: #152630;
 
   font-size: 46px;
   font-weight: 800;
@@ -251,8 +251,8 @@ button:disabled {
 
   margin-bottom: 24px;
 
-  border: 1px solid #202a34;
-  background: #080d13;
+  border: 1px solid #d3dbe1;
+  background: #ffffff;
 }
 
 .mode-switch button {
@@ -275,11 +275,11 @@ button:disabled {
 }
 
 .mode-switch button:hover {
-  color: #b9c8d4;
+  color: #152630;
 }
 
 .mode-switch button.active {
-  color: #dceef6;
+  color: #152630;
 
   background:
     linear-gradient(
@@ -325,13 +325,13 @@ button:disabled {
 
   padding: 0 15px;
 
-  border: 1px solid #27323d;
+  border: 1px solid #d3dbe1;
 
   outline: none;
 
-  color: #e8edf2;
+  color: #152630;
 
-  background: #080d13;
+  background: #ffffff;
 
   font-size: 14px;
 
@@ -373,7 +373,7 @@ button:disabled {
 
   border: 1px solid rgba(220, 75, 90, 0.25);
 
-  color: #ee9da6;
+  color: #c23347;
 
   background: rgba(180, 50, 65, 0.08);
 
@@ -393,7 +393,7 @@ button:disabled {
   border: 1px solid rgba(240, 100, 115, 0.35);
   border-radius: 50%;
 
-  color: #f08a96;
+  color: #c23347;
 
   font-size: 11px;
 }
@@ -414,7 +414,7 @@ button:disabled {
 
   border: 1px solid rgba(104, 190, 220, 0.35);
 
-  color: #e8f7fc;
+  color: #152630;
 
   background:
     linear-gradient(
@@ -461,7 +461,7 @@ button:disabled {
   margin-top: 28px;
   padding-top: 20px;
 
-  border-top: 1px solid #1a222b;
+  border-top: 1px solid #d3dbe1;
 }
 
 .security-info > div {
@@ -477,7 +477,7 @@ button:disabled {
 }
 
 .security-info svg {
-  color: #6b9eaf;
+  color: #23748f;
 }
 
 /* =========================================================
@@ -497,13 +497,13 @@ button:disabled {
 
   padding: 25px 18px;
 
-  border-right: 1px solid #1b232c;
+  border-right: 1px solid #d3dbe1;
 
   background:
     linear-gradient(
       180deg,
-      #080c12,
-      #06090d
+      #f4f7f9,
+      #e7edf1
     );
 }
 
@@ -521,7 +521,7 @@ button:disabled {
       rgba(47, 111, 139, 0.035),
       transparent 35%
     ),
-    #05070b;
+    #eef2f5;
 }
 
 .app:has(.chat-sidebar) {
@@ -540,7 +540,7 @@ button:disabled {
 
   padding: 2px 5px 28px;
 
-  border-bottom: 1px solid #171e26;
+  border-bottom: 1px solid #d3dbe1;
 }
 
 .brand-mark {
@@ -550,14 +550,14 @@ button:disabled {
   display: grid;
   place-items: center;
 
-  border: 1px solid #35434e;
+  border: 1px solid #d3dbe1;
   border-radius: 10px;
 
   background:
     linear-gradient(
       145deg,
-      #18242e,
-      #090d12
+      #d7e1e8,
+      #e7edf1
     );
 
   box-shadow:
@@ -565,7 +565,7 @@ button:disabled {
 }
 
 .brand-mark span {
-  color: #d9eef6;
+  color: #152630;
 
   font-size: 17px;
   font-weight: 850;
@@ -575,7 +575,7 @@ button:disabled {
 }
 
 .brand-name {
-  color: #e7edf2;
+  color: #152630;
 
   font-size: 13px;
   font-weight: 800;
@@ -622,13 +622,13 @@ button:disabled {
 
   padding: 0 12px;
 
-  border: 1px solid #26313b;
+  border: 1px solid #d3dbe1;
 
-  background: #0a1016;
+  background: #ffffff;
 }
 
 .room-display span {
-  color: #dce8ef;
+  color: #152630;
 
   font-family:
     "SFMono-Regular",
@@ -656,7 +656,7 @@ button:disabled {
 }
 
 .room-display button:hover {
-  color: #bde4f2;
+  color: #152630;
 }
 
 /* =========================================================
@@ -684,11 +684,11 @@ button:disabled {
   display: grid;
   place-items: center;
 
-  border: 1px solid #26323c;
+  border: 1px solid #d3dbe1;
 
   color: #71808b;
 
-  background: #0b1016;
+  background: #ffffff;
 
   font-size: 9px;
 }
@@ -710,13 +710,13 @@ button:disabled {
 
   padding: 11px;
 
-  border: 1px solid #1d2730;
+  border: 1px solid #d3dbe1;
 
   text-align: left;
 
-  color: #c7d0d8;
+  color: #152630;
 
-  background: #0a0f14;
+  background: #f7fafc;
 
   transition:
     border-color 0.2s ease,
@@ -724,9 +724,9 @@ button:disabled {
 }
 
 .member-card:hover {
-  border-color: #33424e;
+  border-color: #d3dbe1;
 
-  background: #0e151c;
+  background: #ffffff;
 }
 
 .member-card.active {
@@ -735,8 +735,8 @@ button:disabled {
   background:
     linear-gradient(
       135deg,
-      rgba(52, 130, 158, 0.13),
-      rgba(38, 48, 85, 0.12)
+      rgba(43, 126, 156, 0.14),
+      rgba(43, 126, 156, 0.10)
     );
 
   box-shadow:
@@ -755,16 +755,16 @@ button:disabled {
 
   flex-shrink: 0;
 
-  border: 1px solid #34414b;
+  border: 1px solid #d3dbe1;
   border-radius: 50%;
 
-  color: #dbeaf0;
+  color: #152630;
 
   background:
     radial-gradient(
       circle at 35% 30%,
-      #24333e,
-      #0d141b
+      #cfd9e0,
+      #dbe3e9
     );
 
   font-size: 12px;
@@ -779,7 +779,7 @@ button:disabled {
 .member-name {
   overflow: hidden;
 
-  color: #d7dfe5;
+  color: #152630;
 
   font-size: 12px;
   font-weight: 650;
@@ -827,7 +827,7 @@ button:disabled {
 
   gap: 10px;
 
-  border: 1px dashed #202b34;
+  border: 1px dashed #d3dbe1;
 
   color: #4e5b66;
 
@@ -841,7 +841,7 @@ button:disabled {
 .sidebar-footer {
   padding: 20px 5px 5px;
 
-  border-top: 1px solid #171e26;
+  border-top: 1px solid #d3dbe1;
 }
 
 .encrypted-badge {
@@ -850,7 +850,7 @@ button:disabled {
 
   gap: 7px;
 
-  color: #6793a1;
+  color: #23748f;
 
   font-size: 8px;
   font-weight: 750;
@@ -881,10 +881,10 @@ button:disabled {
 
   padding: 0 28px;
 
-  border-bottom: 1px solid #1b232b;
+  border-bottom: 1px solid #d3dbe1;
 
   background:
-    rgba(7, 11, 16, 0.9);
+    rgba(255, 255, 255, 0.88);
 
   backdrop-filter: blur(15px);
 }
@@ -904,11 +904,11 @@ button:disabled {
 }
 
 .encrypted-avatar {
-  color: #82b8ca;
+  color: #23748f;
 }
 
 .header-title {
-  color: #dce5ea;
+  color: #152630;
 
   font-size: 11px;
   font-weight: 750;
@@ -978,11 +978,11 @@ button:disabled {
 
   padding: 0 12px;
 
-  border: 1px solid #2a343d;
+  border: 1px solid #d3dbe1;
 
   color: #78858e;
 
-  background: #090e13;
+  background: #f7fafc;
 
   font-size: 8px;
   font-weight: 750;
@@ -997,7 +997,7 @@ button:disabled {
 .leave-button:hover {
   border-color: #74434a;
 
-  color: #e08892;
+  color: #c23347;
 }
 
 .mobile-back {
@@ -1035,7 +1035,7 @@ button:disabled {
 .messages-area::-webkit-scrollbar-thumb {
   border-radius: 10px;
 
-  background: #1c2730;
+  background: #c9d4dc;
 }
 
 /* =========================================================
@@ -1066,16 +1066,16 @@ button:disabled {
 
   margin-bottom: 22px;
 
-  border: 1px solid #30414c;
+  border: 1px solid #d3dbe1;
   border-radius: 18px;
 
-  color: #78aec0;
+  color: #23748f;
 
   background:
     radial-gradient(
       circle,
       rgba(67, 146, 173, 0.12),
-      rgba(9, 15, 21, 0.8)
+      rgba(226, 233, 239, 0.9)
     );
 
   box-shadow:
@@ -1083,7 +1083,7 @@ button:disabled {
 }
 
 .private-symbol {
-  color: #9b89c9;
+  color: #6a4fc0;
 
   border-color: #403653;
 
@@ -1091,12 +1091,12 @@ button:disabled {
     radial-gradient(
       circle,
       rgba(117, 86, 173, 0.13),
-      rgba(9, 15, 21, 0.8)
+      rgba(226, 233, 239, 0.9)
     );
 }
 
 .welcome-label {
-  color: #608b99;
+  color: #23748f;
 
   font-size: 9px;
   font-weight: 750;
@@ -1107,7 +1107,7 @@ button:disabled {
 .chat-welcome h1 {
   margin: 13px 0;
 
-  color: #e6edf2;
+  color: #152630;
 
   font-size: clamp(30px, 4vw, 46px);
   font-weight: 650;
@@ -1140,11 +1140,11 @@ button:disabled {
   margin-top: 25px;
   padding: 9px 13px;
 
-  border: 1px solid #202b34;
+  border: 1px solid #d3dbe1;
 
   color: #65747f;
 
-  background: rgba(10, 15, 21, 0.65);
+  background: rgba(255, 255, 255, 0.72);
 
   font-size: 8px;
 
@@ -1152,7 +1152,7 @@ button:disabled {
 }
 
 .welcome-room strong {
-  color: #b8d3de;
+  color: #152630;
 
   font-family:
     "SFMono-Regular",
@@ -1219,13 +1219,13 @@ button:disabled {
 
   padding: 11px 14px;
 
-  border: 1px solid #202c35;
+  border: 1px solid #d3dbe1;
 
   border-radius: 4px 13px 13px 13px;
 
-  color: #cbd6dd;
+  color: #152630;
 
-  background: #0b1117;
+  background: #ffffff;
 
   font-size: 12px;
   line-height: 1.6;
@@ -1241,13 +1241,13 @@ button:disabled {
 
   border-color: rgba(70, 139, 163, 0.32);
 
-  color: #dcebf1;
+  color: #152630;
 
   background:
     linear-gradient(
       135deg,
-      rgba(42, 111, 137, 0.16),
-      rgba(32, 54, 72, 0.16)
+      rgba(43, 126, 156, 0.14),
+      rgba(43, 126, 156, 0.10)
     );
 }
 
@@ -1265,11 +1265,11 @@ button:disabled {
   margin: 14px auto 22px;
   padding: 6px 10px;
 
-  border: 1px solid #1b252d;
+  border: 1px solid #d3dbe1;
 
   color: #52606a;
 
-  background: #090e13;
+  background: #f7fafc;
 
   font-size: 8px;
 
@@ -1306,10 +1306,10 @@ button:disabled {
 
   padding: 0 11px;
 
-  border: 1px solid #202b34;
+  border: 1px solid #d3dbe1;
   border-radius: 13px;
 
-  background: #0b1117;
+  background: #ffffff;
 }
 
 .typing-bubble span {
@@ -1318,7 +1318,7 @@ button:disabled {
 
   border-radius: 50%;
 
-  background: #6d8d99;
+  background: #4a6b76;
 
   animation: typing 1.2s infinite ease-in-out;
 }
@@ -1371,7 +1371,7 @@ button:disabled {
 
   margin-bottom: 8px;
 
-  color: #6a8792;
+  color: #41616d;
 
   font-size: 8px;
 
@@ -1386,17 +1386,17 @@ button:disabled {
 
   padding: 7px;
 
-  border: 1px solid #26323c;
+  border: 1px solid #d3dbe1;
 
   background:
     linear-gradient(
       145deg,
-      #0a1016,
-      #080d12
+      #ffffff,
+      #f2f5f8
     );
 
   box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.22);
+    0 15px 35px rgba(25, 55, 80, 0.12);
 }
 
 .composer:focus-within {
@@ -1419,7 +1419,7 @@ button:disabled {
   border: 0;
   outline: none;
 
-  color: #d8e2e8;
+  color: #152630;
 
   background: transparent;
 
@@ -1442,7 +1442,7 @@ button:disabled {
 
   border: 1px solid rgba(87, 161, 186, 0.35);
 
-  color: #b9dce7;
+  color: #23748f;
 
   background:
     rgba(48, 119, 143, 0.13);
@@ -1482,7 +1482,7 @@ button:disabled {
 
   margin-left: auto;
 
-  color: #527d88;
+  color: #3c626d;
 }
 
 /* =========================================================
@@ -1610,18 +1610,18 @@ button:disabled {
 
   padding: 9px 13px;
 
-  background: rgba(8, 12, 18, 0.96);
+  background: rgba(255, 255, 255, 0.97);
 
   border-radius: 9px;
 
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(25, 60, 85, 0.14);
 
   backdrop-filter: blur(18px);
 
   -webkit-backdrop-filter: blur(18px);
 
   box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.40);
+    0 10px 30px rgba(25, 55, 80, 0.14);
 
   z-index: 100;
 
@@ -1667,7 +1667,7 @@ button:disabled {
 
   border-radius: 8px;
 
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(25, 60, 85, 0.05);
 
 }
 
@@ -1715,9 +1715,9 @@ button:disabled {
 
   border-radius: 4px;
 
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(25, 60, 85, 0.05);
 
-  color: rgba(220, 228, 238, 0.70);
+  color: rgba(20, 40, 55, 0.72);
 
   font-size: 8px;
 
@@ -1730,7 +1730,7 @@ button:disabled {
 
 .moderation-popup-reason {
 
-  color: rgba(210, 220, 232, 0.60);
+  color: rgba(20, 40, 55, 0.62);
 
   font-size: 11px;
 
@@ -1769,7 +1769,7 @@ button:disabled {
 
 .moderation-low .moderation-popup-icon {
 
-  color: #4ade80;
+  color: #16a34a;
 
   background: rgba(74, 222, 128, 0.08);
 
@@ -1778,14 +1778,14 @@ button:disabled {
 
 .moderation-low .moderation-popup-top strong {
 
-  color: #4ade80;
+  color: #16a34a;
 
 }
 
 
 .moderation-low .moderation-popup-indicator {
 
-  background: #4ade80;
+  background: #16a34a;
 
 }
 
@@ -1803,7 +1803,7 @@ button:disabled {
 
 .moderation-medium .moderation-popup-icon {
 
-  color: #fbbf24;
+  color: #b45309;
 
   background: rgba(251, 191, 36, 0.08);
 
@@ -1812,14 +1812,14 @@ button:disabled {
 
 .moderation-medium .moderation-popup-top strong {
 
-  color: #fbbf24;
+  color: #b45309;
 
 }
 
 
 .moderation-medium .moderation-popup-indicator {
 
-  background: #fbbf24;
+  background: #b45309;
 
 }
 
@@ -1833,7 +1833,7 @@ button:disabled {
   border-color: rgba(255, 112, 67, 0.35);
 
   box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.45),
+    0 10px 30px rgba(25, 55, 80, 0.16),
     0 0 20px rgba(255, 112, 67, 0.08);
 
 }
@@ -1841,7 +1841,7 @@ button:disabled {
 
 .moderation-high .moderation-popup-icon {
 
-  color: #ff7043;
+  color: #d9481f;
 
   background: rgba(255, 112, 67, 0.08);
 
@@ -1850,14 +1850,14 @@ button:disabled {
 
 .moderation-high .moderation-popup-top strong {
 
-  color: #ff7043;
+  color: #d9481f;
 
 }
 
 
 .moderation-high .moderation-popup-indicator {
 
-  background: #ff7043;
+  background: #d9481f;
 
   box-shadow:
     0 0 9px rgba(255, 112, 67, 0.65);
@@ -1874,7 +1874,7 @@ button:disabled {
   border-color: rgba(255, 59, 77, 0.45);
 
   box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.50),
+    0 10px 30px rgba(25, 55, 80, 0.18),
     0 0 22px rgba(255, 59, 77, 0.10);
 
 }
@@ -1882,7 +1882,7 @@ button:disabled {
 
 .moderation-critical .moderation-popup-icon {
 
-  color: #ff3b4d;
+  color: #dc2633;
 
   background: rgba(255, 59, 77, 0.10);
 
@@ -1893,14 +1893,14 @@ button:disabled {
 
 .moderation-critical .moderation-popup-top strong {
 
-  color: #ff3b4d;
+  color: #dc2633;
 
 }
 
 
 .moderation-critical .moderation-popup-indicator {
 
-  background: #ff3b4d;
+  background: #dc2633;
 
   box-shadow:
     0 0 11px rgba(255, 59, 77, 0.75);
@@ -1956,14 +1956,14 @@ button:disabled {
 
   letter-spacing: 0.7px;
 
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(25, 60, 85, 0.05);
 
 }
 
 
 .message-flag-badge.moderation-low {
 
-  color: #4ade80;
+  color: #16a34a;
 
   border: 1px solid rgba(74, 222, 128, 0.20);
 
@@ -1972,7 +1972,7 @@ button:disabled {
 
 .message-flag-badge.moderation-medium {
 
-  color: #fbbf24;
+  color: #b45309;
 
   border: 1px solid rgba(251, 191, 36, 0.20);
 
@@ -1981,7 +1981,7 @@ button:disabled {
 
 .message-flag-badge.moderation-high {
 
-  color: #ff7043;
+  color: #d9481f;
 
   border: 1px solid rgba(255, 112, 67, 0.20);
 
@@ -1990,7 +1990,7 @@ button:disabled {
 
 .message-flag-badge.moderation-critical {
 
-  color: #ff3b4d;
+  color: #dc2633;
 
   border: 1px solid rgba(255, 59, 77, 0.25);
 
@@ -2054,7 +2054,7 @@ button:disabled {
 
   border: 1px solid rgba(251, 191, 36, 0.30);
 
-  color: #fbbf24;
+  color: #b45309;
 
   background: rgba(251, 191, 36, 0.07);
 
@@ -2070,7 +2070,7 @@ button:disabled {
 
   border-color: rgba(255, 59, 77, 0.50);
 
-  color: #ff8b96;
+  color: #cf2e42;
 
   background: rgba(255, 59, 77, 0.10);
 
