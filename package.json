@@ -1,4 +1,14 @@
 {
+  "name": "encrypto",
+  "private": true,
+  "scripts": {
+    "install:all": "npm --prefix server install && npm --prefix client install",
+    "build": "npm --prefix client install && npm --prefix client run build",
+    "start": "node server/server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
     "sqlite3": "^6.0.1"
   }

@@ -1,5 +1,7 @@
 const express = require("express");
 const http = require("http");
+const fs = require("fs");
+const path = require("path");
 const cors = require("cors");
 const crypto = require("crypto");
 const { Server } = require("socket.io");
@@ -115,6 +117,14 @@ app.use(
 );
 
 app.use(express.json({ limit: "100kb" }));
+
+// Serve the built client (single-service deploy). Skipped locally
+// when client/dist doesn't exist - API + sockets work standalone.
+const clientDist = path.join(__dirname, "..", "client", "dist");
+
+if (fs.existsSync(clientDist)) {
+  app.use(express.static(clientDist));
+}
 
 // =========================================================
 // HTTP SERVER
@@ -547,6 +557,21 @@ app.get("/api/rooms", (req, res) => {
 
   res.json({ rooms: list });
 });
+
+// SPA fallback for the served client (API + socket.io pass through).
+if (fs.existsSync(clientDist)) {
+  app.use((req, res, next) => {
+    if (
+      req.method !== "GET" ||
+      req.path.startsWith("/api/") ||
+      req.path.startsWith("/socket.io/")
+    ) {
+      return next();
+    }
+
+    res.sendFile(path.join(clientDist, "index.html"));
+  });
+}
 
 // =========================================================
 // SOCKET CONNECTION

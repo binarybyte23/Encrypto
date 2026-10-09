@@ -73,7 +73,9 @@ function buildModeration(risk) {
 // CONFIG
 // =========================================================
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "http://localhost:5000";
+// Empty = same origin (single-service deploy). Set VITE_SOCKET_URL
+// only when API lives on a different host.
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "";
 
 
 // =========================================================
@@ -378,7 +380,7 @@ function App() {
 
   useEffect(() => {
     const socket =
-      io(SOCKET_URL, {
+      io(SOCKET_URL || undefined, {
         transports: [
           "websocket",
           "polling",
