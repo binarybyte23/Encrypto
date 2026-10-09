@@ -298,3 +298,4 @@ Add an appropriate open-source license before distributing the project publicly.
 **ENCRYPTO**
 
 Private Communication • Real-Time Messaging • Client-Side Cryptography • Threat Detection
+# Encrypto
