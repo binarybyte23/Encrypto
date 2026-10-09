@@ -1,0 +1,12 @@
+node_modules/
+client/node_modules/
+server/node_modules/
+client/dist/
+server/encrypto.db
+*.log
+.env
+.env.local
+strix_runs/
+
+.opencode/
+.DS_Store
