@@ -15,7 +15,7 @@ const {
 // CONFIG
 // =========================================================
 
-const PORT = Number(process.env.PORT) || 5000;
+const PORT = Number(process.env.PORT) || 5001;
 const MAX_ROOM_USERS = 2;
 const KNOCK_COOLDOWN_MS = 20 * 1000;
 const ROOM_CODE_LENGTH = 4;
