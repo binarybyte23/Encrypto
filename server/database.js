@@ -1,4 +1,4 @@
-const sqlite3 = require("sqlite3").verbose();
+const { DatabaseSync } = require("node:sqlite");
 
 const crypto = require("crypto");
 
@@ -96,67 +96,76 @@ function decryptAtRest(stored) {
 }
 
 const db =
-  new sqlite3.Database(
-    databasePath,
-    (error) => {
-      if (error) {
-        console.error(
-          "[DATABASE] Connection failed:",
-          error.message
-        );
+  new DatabaseSync(databasePath);
 
-        return;
-      }
-
-      console.log(
-        "[DATABASE] SQLite connected"
-      );
-    }
-  );
+console.log(
+  "[DATABASE] SQLite connected"
+);
 
 
 // =========================================================
 // CREATE INCIDENT TABLE
 // =========================================================
 
-db.serialize(() => {
+db.exec(`
+  CREATE TABLE IF NOT EXISTS incidents (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
 
-  db.run(`
-    CREATE TABLE IF NOT EXISTS incidents (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+    room_code TEXT NOT NULL,
 
-      room_code TEXT NOT NULL,
+    timestamp TEXT NOT NULL,
 
-      timestamp TEXT NOT NULL,
+    sender_username TEXT NOT NULL,
 
-      sender_username TEXT NOT NULL,
+    sender_ip TEXT,
 
-      sender_ip TEXT,
+    receiver_username TEXT,
 
-      receiver_username TEXT,
+    receiver_ip TEXT,
 
-      receiver_ip TEXT,
+    message TEXT NOT NULL,
 
-      message TEXT NOT NULL,
+    severity TEXT NOT NULL,
 
-      severity TEXT NOT NULL,
+    category TEXT NOT NULL,
 
-      category TEXT NOT NULL,
+    reason TEXT,
 
-      reason TEXT,
+    score INTEGER
+  )
+`);
 
-      score INTEGER
-    )
-  `);
+const insertIncident = db.prepare(`
+  INSERT INTO incidents (
+    room_code,
+    timestamp,
+    sender_username,
+    sender_ip,
+    receiver_username,
+    receiver_ip,
+    message,
+    severity,
+    category,
+    reason,
+    score
+  )
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+`);
 
-});
+const trimIncidents = db.prepare(
+  `DELETE FROM incidents WHERE id NOT IN (SELECT id FROM incidents ORDER BY id DESC LIMIT 5000)`
+);
+
+const selectIncidents = db.prepare(
+  `SELECT * FROM incidents ORDER BY id DESC LIMIT ?`
+);
 
 
 // =========================================================
 // SAVE FLAGGED INCIDENT
 // =========================================================
 
-function saveIncident({
+async function saveIncident({
   roomCode,
   timestamp,
   senderUsername,
@@ -169,87 +178,37 @@ function saveIncident({
   reason,
   score,
 }) {
+  try {
+    const result = insertIncident.run(
+      roomCode,
+      timestamp,
+      senderUsername,
+      senderIp || null,
+      receiverUsername || null,
+      receiverIp || null,
+      encryptAtRest(message),
+      severity,
+      category,
+      reason || null,
+      Number.isFinite(score) ? score : 0
+    );
 
-  return new Promise(
-    (resolve, reject) => {
+    console.log(
+      `[DATABASE] Incident saved. ID: ${result.lastInsertRowid}`
+    );
 
-      const query = `
-        INSERT INTO incidents (
-          room_code,
-          timestamp,
-          sender_username,
-          sender_ip,
-          receiver_username,
-          receiver_ip,
-          message,
-          severity,
-          category,
-          reason,
-          score
-        )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `;
+    // ponytail: retention ceiling 5000 rows, prevents disk-fill
+    trimIncidents.run();
 
+    return result.lastInsertRowid;
+  } catch (error) {
+    console.error(
+      "[DATABASE] Failed to save incident:",
+      error.message
+    );
 
-      db.run(
-        query,
-        [
-          roomCode,
-
-          timestamp,
-
-          senderUsername,
-
-          senderIp || null,
-
-          receiverUsername ||
-            null,
-
-          receiverIp || null,
-
-          encryptAtRest(message),
-
-          severity,
-
-          category,
-
-          reason || null,
-
-          Number.isFinite(score)
-            ? score
-            : 0,
-        ],
-        function (error) {
-
-          if (error) {
-
-            console.error(
-              "[DATABASE] Failed to save incident:",
-              error.message
-            );
-
-            reject(error);
-
-            return;
-          }
-
-
-          console.log(
-            `[DATABASE] Incident saved. ID: ${this.lastID}`
-          );
-
-          // ponytail: retention ceiling 5000 rows, prevents disk-fill
-          db.run(
-            `DELETE FROM incidents WHERE id NOT IN (SELECT id FROM incidents ORDER BY id DESC LIMIT 5000)`
-          );
-
-          resolve(
-            this.lastID
-          );
-        }
-      );
-    }
-  );
+    throw error;
+  }
 }
 
 
@@ -257,28 +216,15 @@ function saveIncident({
 // READ INCIDENTS (protected API only)
 // =========================================================
 
-function getIncidents(limit = 100) {
+async function getIncidents(limit = 100) {
   const safeLimit = Math.max(1, Math.min(500, Number(limit) || 100));
 
-  return new Promise((resolve, reject) => {
-    db.all(
-      `SELECT * FROM incidents ORDER BY id DESC LIMIT ?`,
-      [safeLimit],
-      (error, rows) => {
-        if (error) {
-          reject(error);
-          return;
-        }
+  const rows = selectIncidents.all(safeLimit);
 
-        resolve(
-          (rows || []).map((row) => ({
-            ...row,
-            message: decryptAtRest(row.message),
-          }))
-        );
-      }
-    );
-  });
+  return rows.map((row) => ({
+    ...row,
+    message: decryptAtRest(row.message),
+  }));
 }
 
 
@@ -287,25 +233,18 @@ function getIncidents(limit = 100) {
 // =========================================================
 
 function closeDatabase() {
+  try {
+    db.close();
 
-  db.close(
-    (error) => {
-
-      if (error) {
-
-        console.error(
-          "[DATABASE] Close failed:",
-          error.message
-        );
-
-        return;
-      }
-
-      console.log(
-        "[DATABASE] SQLite closed"
-      );
-    }
-  );
+    console.log(
+      "[DATABASE] SQLite closed"
+    );
+  } catch (error) {
+    console.error(
+      "[DATABASE] Close failed:",
+      error.message
+    );
+  }
 }
 
 
