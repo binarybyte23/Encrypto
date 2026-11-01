@@ -285,6 +285,24 @@ The goal is to demonstrate how privacy-oriented communication and security monit
 
 ---
 
+# 🚀 Deploy
+
+The server serves the built client from `client/dist`, so this is a single-service deploy.
+
+1. Build the client: `npm run build`
+2. Start the server: `npm start`
+3. Set the production environment variables from `.env.example`:
+   - `CLIENT_URL` — the public URL of the app (used for CORS)
+   - `ADMIN_TOKEN` — required to read `/api/incidents`
+   - `FORENSIC_KEY` — 32-byte base64 key for at-rest incident encryption
+   - `DATABASE_PATH` — point at a persistent volume (e.g. `/data/encrypto.db`); otherwise SQLite is wiped on redeploy
+   - `TRUST_PROXY=1` — when running behind a reverse proxy/load balancer
+4. Leave `VITE_SOCKET_URL` unset in production so the client talks to its own origin.
+
+`railway.json` provides the build/start commands and healthcheck for Railway. On other platforms, configure the same commands.
+
+---
+
 # 📜 License
 
 This project is currently intended as an educational and experimental project.

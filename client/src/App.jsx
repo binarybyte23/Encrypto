@@ -55,7 +55,7 @@ async function keyFingerprint(publicKeyJwk) {
 }
 
 function validUser(name) {
-  return /^[A-Za-z0-9 _.\-]{1,30}$/.test(String(name || "").trim());
+  return /^[A-Za-z0-9 _.-]{1,30}$/.test(String(name || "").trim());
 }
 
 function buildModeration(risk) {
@@ -144,12 +144,7 @@ function App() {
     useState({});
 
   function knockWaitSec(code) {
-    return Math.max(
-      0,
-      Math.ceil(
-        ((knockCooldowns[code] || 0) - Date.now()) / 1000
-      )
-    );
+    return Math.max(0, Number(knockCooldowns[code]) || 0);
   }
 
   const hasKnockCooldown =
@@ -160,11 +155,10 @@ function App() {
 
     const timer = setInterval(() => {
       setKnockCooldowns((prev) => {
-        const now = Date.now();
         const next = {};
 
-        for (const [code, until] of Object.entries(prev)) {
-          if (until > now) next[code] = until;
+        for (const [code, secs] of Object.entries(prev)) {
+          if (secs > 1) next[code] = secs - 1;
         }
 
         return next;
@@ -209,8 +203,6 @@ function App() {
   }
 
   async function fetchOpenRooms() {
-    setRoomsLoading(true);
-
     try {
       const res = await fetch(`${SOCKET_URL}/api/rooms`);
       const data = await res.json();
@@ -218,6 +210,14 @@ function App() {
     } catch (e) {
       console.error("fetch /api/rooms failed:", SOCKET_URL, e);
       setOpenRooms([]);
+    }
+  }
+
+  async function browseOpenRooms() {
+    setRoomsLoading(true);
+
+    try {
+      await fetchOpenRooms();
     } finally {
       setRoomsLoading(false);
     }
@@ -226,9 +226,12 @@ function App() {
   // ponytail: poll open rooms on landing, 5s is enough for a lobby list
   useEffect(() => {
     if (screen !== "landing") return;
-    fetchOpenRooms();
+    const first = setTimeout(fetchOpenRooms, 0);
     const t = setInterval(fetchOpenRooms, 5000);
-    return () => clearInterval(t);
+    return () => {
+      clearTimeout(first);
+      clearInterval(t);
+    };
   }, [screen]);
 
   const [keyFingerprints, setKeyFingerprints] =
@@ -375,6 +378,88 @@ function App() {
 
 
   // =======================================================
+  // CLEAR ROOM STATE
+  // =======================================================
+
+  function clearRoomState() {
+    /*
+     * ENCRYPTO is intentionally ephemeral.
+     * Nothing from the previous room should remain
+     * available after leaving or losing the connection.
+     */
+
+    roomSecretRef.current =
+      null;
+
+    currentRoomRef.current =
+      "";
+
+    usernameRef.current =
+      "";
+
+    pendingRoomMessagesRef.current =
+      [];
+
+    setMessages([]);
+
+    setPrivateMessages({});
+
+    setUsers([]);
+
+    setKeyFingerprints({});
+
+    setSelectedUser(
+      null
+    );
+
+    setMessageInput("");
+    setMessageRisk({ flagged: false, level: "NONE", category: "", reason: "", score: 0 });
+
+    setPrivateInput("");
+
+    setPrivateMessageRisk({
+      flagged: false,
+      level: "NONE",
+      category: "",
+      reason: "",
+      score: 0,
+    });
+
+    setTypingUser("");
+
+    setPrivateTypingUser("");
+
+    setRoomEncryptionReady(
+      false
+    );
+
+    setCurrentUserId(
+      ""
+    );
+
+    setRoomCode("");
+
+    setError("");
+
+    setCopied(false);
+
+    setJoinRequests([]);
+
+    setKnockedRooms({});
+
+    setKnockCooldowns({});
+
+    setSending(false);
+
+    setPrivateSending(false);
+
+    setScreen(
+      "landing"
+    );
+  }
+
+
+  // =======================================================
   // SOCKET CONNECTION
   // =======================================================
 
@@ -437,6 +522,24 @@ function App() {
         }
 
         setUsers(roomUsers);
+
+        // Keep the private view selected by id while refreshing its
+        // public key, so the next DM does not need a re-click.
+        setSelectedUser((prev) => {
+          if (!prev) return prev;
+
+          const fresh = roomUsers.find((u) => u.id === prev.id);
+
+          if (
+            fresh &&
+            (fresh.publicKey !== prev.publicKey ||
+              fresh.username !== prev.username)
+          ) {
+            return fresh;
+          }
+
+          return prev;
+        });
 
         // ponytail: prune stale fingerprints, ceiling n=2 users
         setKeyFingerprints((prev) => {
@@ -981,7 +1084,7 @@ function App() {
 
         setKnockCooldowns((prev) => ({
           ...prev,
-          [code]: Date.now() + (data.retryAfterSec || 20) * 1000,
+          [code]: data.retryAfterSec || 20,
         }));
 
         setError("Host declined your request.");
@@ -995,9 +1098,9 @@ function App() {
         const code = String(data.roomCode).toLowerCase();
 
         setKnockCooldowns((prev) =>
-          prev[code] && prev[code] > Date.now()
+          prev[code] > 0
             ? prev
-            : { ...prev, [code]: Date.now() + secs * 1000 }
+            : { ...prev, [code]: secs }
         );
       }
 
@@ -1058,33 +1161,6 @@ function App() {
       privateMessages,
       selectedUser,
     ]);
-
-
-  // =======================================================
-  // KEEP PRIVATE SELECTION STABLE
-  // =======================================================
-  //
-  // room-users refreshes replace user objects. Keep the
-  // private view selected by id and refresh the public key
-  // so the next DM does not require re-clicking the member.
-
-  useEffect(() => {
-    if (!selectedUser) {
-      return;
-    }
-
-    const fresh = users.find(
-      (user) => user.id === selectedUser.id
-    );
-
-    if (
-      fresh &&
-      (fresh.publicKey !== selectedUser.publicKey ||
-        fresh.username !== selectedUser.username)
-    ) {
-      setSelectedUser(fresh);
-    }
-  }, [users, selectedUser]);
 
 
   // =======================================================
@@ -1872,88 +1948,6 @@ function App() {
 
 
   // =======================================================
-  // CLEAR ROOM STATE
-  // =======================================================
-
-  function clearRoomState() {
-    /*
-     * ENCRYPTO is intentionally ephemeral.
-     * Nothing from the previous room should remain
-     * available after leaving or losing the connection.
-     */
-
-    roomSecretRef.current =
-      null;
-
-    currentRoomRef.current =
-      "";
-
-    usernameRef.current =
-      "";
-
-    pendingRoomMessagesRef.current =
-      [];
-
-    setMessages([]);
-
-    setPrivateMessages({});
-
-    setUsers([]);
-
-    setKeyFingerprints({});
-
-    setSelectedUser(
-      null
-    );
-
-    setMessageInput("");
-    setMessageRisk({ flagged: false, level: "NONE", category: "", reason: "", score: 0 });
-
-    setPrivateInput("");
-
-    setPrivateMessageRisk({
-      flagged: false,
-      level: "NONE",
-      category: "",
-      reason: "",
-      score: 0,
-    });
-
-    setTypingUser("");
-
-    setPrivateTypingUser("");
-
-    setRoomEncryptionReady(
-      false
-    );
-
-    setCurrentUserId(
-      ""
-    );
-
-    setRoomCode("");
-
-    setError("");
-
-    setCopied(false);
-
-    setJoinRequests([]);
-
-    setKnockedRooms({});
-
-    setKnockCooldowns({});
-
-    setSending(false);
-
-    setPrivateSending(false);
-
-    setScreen(
-      "landing"
-    );
-  }
-
-
-  // =======================================================
   // LEAVE ROOM
   // =======================================================
 
@@ -2198,7 +2192,7 @@ function App() {
               <button
                 type="button"
                 className="primary-action"
-                onClick={fetchOpenRooms}
+                onClick={browseOpenRooms}
                 disabled={!connected || roomsLoading}
               >
                 <span>
@@ -2393,8 +2387,7 @@ function App() {
           <div className="room-display">
 
             <span>
-              {currentRoomRef.current ||
-                roomCode}
+              {roomCode}
             </span>
 
             <button
@@ -2687,8 +2680,7 @@ function App() {
                     <span className="online-indicator" />
                     ROOM
                     {" "}
-                    {currentRoomRef.current ||
-                      roomCode}
+                    {roomCode}
                     {" "}
                     •
                     {" "}
@@ -2821,8 +2813,7 @@ function App() {
                       ROOM
                       {" "}
                       <strong>
-                        {currentRoomRef.current ||
-                          roomCode}
+                        {roomCode}
                       </strong>
                     </div>
 

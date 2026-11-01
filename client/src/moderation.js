@@ -143,8 +143,8 @@ const HIGH_RULES = [
     score: 78,
     reason: "Firearm acquisition or illegal weapon detected.",
     patterns: [
-      /\bak[\s\-]?47\b/i,
-      /\bar[\s\-]?15\b/i,
+      /\bak[\s-]?47\b/i,
+      /\bar[\s-]?15\b/i,
       /\bm16\b/i,
       /\bglock\b/i,
       /\buzi\b/i,
